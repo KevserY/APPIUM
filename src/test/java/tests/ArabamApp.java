@@ -81,11 +81,13 @@ public class ArabamApp {
         Thread.sleep(1000);
 
         for(int i=0; i<5; i++){
-        action.press(PointOption.point(482,1516)) // kaydırma yapmak için ekranda belirlenecek nokta
-                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(600)))
-                .moveTo(PointOption.point(482,320))
-                .release()
-                .perform();
+        action.press(PointOption.point(482,1516)) // Kaydırma yapmak için ekranda belirlenecek ilk nokta.
+                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(600))) //Başlangıç ile bitiş arasındaki hızı belirleyen süre.
+                // Eğer süre kısalırsa daha fazla yol kat edilir. yani ekranda aşağıya doğru daha hızlı bir hareket gerçekleşir.
+                // Aksine, eğer süre uzarsa daha az yol katedilir. Yani ekranda aşağıya doğru daha yavaş bir hareket gerçekleşir.
+                .moveTo(PointOption.point(482,320)) // Belirlenen ilk noktadan son noktaya geçişi sağlayan ve kaydırma işleminin son evresi.
+                .release() // Ekrandan parmak kaldırılır
+                .perform(); // Bu işlemler perform sayesinde yerine getirilir.
         Thread.sleep(500);
         }
 
@@ -99,15 +101,30 @@ public class ArabamApp {
         driver.findElementByXPath("//*[@text='1.4 TSi BlueMotion']").click();
 
         // Paket secimi yapilir
-        // 412  721
+        // 412  721 --Highline seçtik
         action.press(PointOption.point(420,720))
                 .release()
                 .perform();
-
-
+        Thread.sleep(500);
         // Ucuzdan pahaliya siralama yaparak filtreleme yapilir
-        
+        Thread.sleep(1000);
+        driver.findElementByXPath("//*[@resource-id='com.dogan.arabam:id/constraintLayoutSorting']").click();  // sıralamak için filtreye tıklanır. (locate için Xpath kullandım)
+        Thread.sleep(1000);
+        action.press(PointOption.point(300,747)).release().perform(); // sıralamada ucuzdan pahalıya tıklandı (koordinat ile locate belirledim)
+
         // Gelen en ucuz aracin 500.000 tl den buyuk oldugu dogrulanir
+
+        AndroidElement enUcuzAracFiyatiElementi = driver.findElementByXPath("(//*[@resource-id='com.dogan.arabam:id/tvPrice'])[1]");
+        String aracinSonFiyati = enUcuzAracFiyatiElementi.getText();
+
+        System.out.println(aracinSonFiyati); //670.000 TL
+        // karşılaştırma yapmak için önce nokta, boşluk ve TL den kurlutmalıyız
+        //Dinamik Yol:
+        aracinSonFiyati = aracinSonFiyati.replaceAll("\\D","");
+        System.out.println(aracinSonFiyati);
+
+        // Gelen en ucuz aracin 500.000 tl den buyuk oldugu dogrulanir
+        assertTrue(Integer.parseInt(aracinSonFiyati)>500000);
 
 
 
