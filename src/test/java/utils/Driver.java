@@ -42,11 +42,13 @@ public class Driver {
             caps.setCapability("appPackage","com.skypicker.main");
             caps.setCapability("appActivity","com.kiwi.android.feature.splash.impl.ui.SplashActivity");
             caps.setCapability(MobileCapabilityType.NO_RESET,false);
-            /* eger bu capability FALSE olarak kullanilirsa,uygulama test edildikten sonra her seferinde kullanici datalari temizlenir ve
-            uygulamanin ilk install haline dondurulur
-             */
-            // eger true olursa kullanicili bilgileri test bittikten sonra sifirlan ve tercihler kaydedilir.Islemlere kaldiginiz yerden devam edilir
+            /* Eger bu capability FALSE olarak kullanilirsa,
+               uygulama test edildikten sonra her seferinde kullanici datalari temizlenir
+               ve uygulamanin ilk install haline dondurulur
 
+               Eger true olursa kullanicili bilgileri test bittikten sonra sifirlanır
+               ve tercihler kaydedilir.Islemlere kaldiginiz yerden devam edilir
+            */
 
             if (ConfigReader.getProperty("platformName").equals("Android")) {
 
@@ -56,7 +58,7 @@ public class Driver {
             }else {
                 /*
                 assert appiumServerURL != null;
-               iosDriver = new IOSDriver<IOSElement>(appiumServerURL,caps);
+                iosDriver = new IOSDriver<IOSElement>(appiumServerURL,caps);
                 iosDriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
                */

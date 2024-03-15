@@ -126,14 +126,5 @@ public class ArabamApp {
         // Gelen en ucuz aracin 500.000 tl den buyuk oldugu dogrulanir
         assertTrue(Integer.parseInt(aracinSonFiyati)>500000);
 
-
-
-
-
-
     }
-
-
-
-
 }
